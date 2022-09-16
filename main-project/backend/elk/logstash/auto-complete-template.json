@@ -1,0 +1,40 @@
+{
+  "template": "product-*",
+  "index_patterns": ["*"],
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "auto_complete_analyzer": {
+          "tokenizer": "auto_complete_tokenizer",
+          "filter": ["lowercase", "unique", "auto_complete_filter"]
+        }
+      },
+      "tokenizer": {
+        "auto_complete_tokenizer": {
+          "type": "nGram",
+          "min_gram": "1",
+          "max_gram": "10"
+        }
+      },
+      "filter": {
+        "auto_complete_filter": {
+          "type": "stop",
+          "stopwords": ["by", "in", "the", "as", "on", "은", "는", "이", "가"]
+        }
+      }
+    },
+    "max_ngram_diff": "10"
+  },
+  "mappings": {
+    "properties": {
+      "productName": {
+        "type": "text",
+        "analyzer": "auto_complete_analyzer"
+      },
+      "productDescription": {
+        "type": "text",
+        "analyzer": "auto_complete_analyzer"
+      }
+    }
+  }
+}

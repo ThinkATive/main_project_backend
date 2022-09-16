@@ -1,0 +1,95 @@
+SELECT id 
+       productName,
+       productPrice, 
+       productDescription, 
+       productSerialNumber, 
+       productDiscount, 
+       productPeopleLiked, 
+       productManufactureDate, 
+       updatedAt, 
+       isStock, 
+       productPeopleInterested, 
+       deletedAt, 
+       brandId, 
+       seasonId, 
+       productSubCategoryId, 
+       product_productSubCategory.id, 
+       product_productSubCategory.productSubCategoryName, 
+       product_productSubCategory.productMainCategoryId, 
+       product_brand.id, 
+       product_brand.brandName, 
+       product_brand.deletedAt, 
+       product_season.id, 
+       product_season.seasonName, 
+       product_season.deletedAt, 
+       product_materials.id, 
+       product_materials.materialName, 
+       product_materials.deletedAt, 
+       product_colors.id, 
+       product_colors.colorName, 
+       product_colors.deletedAt, 
+       product_sizes.id, 
+       product_sizes.sizeName, 
+       product_sizes.deletedAt, 
+       product_genders.id, 
+       product_genders.genderName, 
+       product_genders.deletedAt 
+  FROM product
+LEFT JOIN product_sub_category product_productSubCategory 
+    ON product_productSubCategory.id=productSubCategoryId
+LEFT JOIN brand product_brand 
+    ON product_brand.id=brandId 
+   AND (product_brand.deletedAt IS NULL)
+LEFT JOIN season product_season 
+    ON product_season.id=seasonId 
+   AND (product_season.deletedAt IS NULL)  
+LEFT JOIN product_materials_material Product_product_materials
+    ON Product_product_materials.productId=id 
+LEFT JOIN material product_materials 
+    ON product_materials.id=Product_product_materials.materialId 
+   AND (product_materials.deletedAt IS NULL)  
+LEFT JOIN product_colors_color Product_product_colors 
+    ON Product_product_colors.productId=id 
+LEFT JOIN color product_colors 
+    ON product_colors.id=Product_product_colors.colorId 
+   AND (product_colors.deletedAt IS NULL)  
+LEFT JOIN product_sizes_size Product_product_sizes 
+    ON Product_product_sizes.productId=id 
+LEFT JOIN size product_sizes 
+    ON product_sizes.id=Product_product_sizes.sizeId 
+   AND (product_sizes.deletedAt IS NULL)  
+LEFT JOIN product_genders_gender Product_product_genders 
+    ON Product_product_genders.productId=id
+LEFT JOIN gender product_genders 
+    ON product_genders.id=Product_product_genders.genderId 
+   AND (product_genders.deletedAt IS NULL) 
+ WHERE deletedAt IS NULL
+
+
+ SELECT `Product`.`id` AS `Product_id`, 
+ `Product`.`productName` AS `Product_productName`, 
+ `Product`.`productPrice` AS `Product_productPrice`, 
+ `Product`.`productDescription` AS `Product_productDescription`, 
+ `Product`.`productSerialNumber` AS `Product_productSerialNumber`, 
+ `Product`.`productDiscount` AS `Product_productDiscount`, 
+ `Product`.`productPeopleLiked` AS `Product_productPeopleLiked`, 
+ `Product`.`updatedAt` AS `Product_updatedAt`, 
+ `Product`.`isStock` AS `Product_isStock`, 
+ `Product`.`productPeopleInterested` AS `Product_productPeopleInterested`, 
+ `Product`.`deletedAt` AS `Product_deletedAt`, 
+ `Product`.`brandId` AS `Product_brandId`, 
+ `Product`.`seasonId` AS `Product_seasonId`, 
+ `Product__Product_brand`.`id` AS `Product__Product_brand_id`, 
+ `Product__Product_brand`.`brandName` AS `Product__Product_brand_brandName`, 
+ `Product__Product_brand`.`deletedAt` AS `Product__Product_brand_deletedAt`, 
+ `Product__Product_season`.`id` AS `Product__Product_season_id`, 
+ `Product__Product_season`.`seasonName` AS `Product__Product_season_seasonName`, 
+ `Product__Product_season`.`deletedAt` AS `Product__Product_season_deletedAt`
+ FROM `product` `Product` 
+ LEFT JOIN `brand` `Product__Product_brand` 
+ ON `Product__Product_brand`.`id`=`Product`.`brandId` 
+ AND (`Product__Product_brand`.`deletedAt` IS NULL)  
+ LEFT JOIN `season` `Product__Product_season` 
+ ON `Product__Product_season`.`id`=`Product`.`seasonId` 
+ AND (`Product__Product_season`.`deletedAt` IS NULL) 
+ WHERE `Product`.`deletedAt` IS NULL;
